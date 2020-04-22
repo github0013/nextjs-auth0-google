@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    # command: ash -c "yarn dev"
+
+  ngrok:
+    image: wernight/ngrok
+    environment:
+      # https://dashboard.ngrok.com/signup
+      # https://ngrok.com/docs#getting-started-authtoken
+      NGROK_AUTH: YOUR_NGROK_AUTH
+      NGROK_PORT: frontend:3000
+    depends_on:
+      - frontend
+    ports:
+      - 4040:4040
